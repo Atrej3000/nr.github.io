@@ -1,0 +1,149 @@
+/* ═══════════════════════════════════════════════════════════════
+ *  БО «Наші Рідненькі» — Custom Styles
+ *  Note: Tailwind utilities are compiled separately and loaded
+ *        via css/tailwind.css in production.
+ * ═══════════════════════════════════════════════════════════════ */
+
+/* ── Theme Tokens ── */
+:root {
+  --c-primary: #CC3333;
+  --c-primary-dark: #8B1A1A;
+  --c-accent: #F2A900;
+  --c-warm: #FFF9F0;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Base ── */
+html {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+}
+
+[id] {
+  scroll-margin-top: 80px;
+}
+
+/* ── Hero Background ── */
+.hero-bg {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(139, 26, 26, .88),
+      rgba(204, 51, 51, .75) 50%,
+      rgba(139, 26, 26, .85)
+    ),
+    url('../images/4.jpg') center / cover no-repeat;
+  background-attachment: fixed;
+}
+
+@media (max-width: 768px) {
+  .hero-bg {
+    background-attachment: scroll;
+  }
+}
+
+/* ── Scroll Reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition:
+    opacity .7s var(--ease-out-expo),
+    transform .7s var(--ease-out-expo);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-d1 { transition-delay: .1s; }
+.reveal-d2 { transition-delay: .2s; }
+.reveal-d3 { transition-delay: .3s; }
+.reveal-d4 { transition-delay: .4s; }
+
+/* ── Section Title Accent ── */
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--c-accent);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+/* ── CTA Pulse Animation ── */
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(242, 169, 0, .4); }
+  50%      { box-shadow: 0 0 0 12px rgba(242, 169, 0, 0); }
+}
+
+.cta-pulse {
+  animation: pulse-ring 2.5s ease-in-out infinite;
+}
+
+/* ── Gallery ── */
+.gallery-item img {
+  transition: transform .5s var(--ease-out-expo);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.07);
+}
+
+.gallery-caption {
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.gallery-item:hover .gallery-caption {
+  opacity: 1;
+}
+
+/* ── Lightbox ── */
+.lightbox-backdrop {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ── Noise Overlay ── */
+.noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 8px; }
+::-webkit-scrollbar-track { background: var(--c-warm); }
+::-webkit-scrollbar-thumb { background: var(--c-primary); border-radius: 4px; }
+
+/* ── CTA Banner Background ── */
+.cta-banner-bg {
+  background:
+    linear-gradient(135deg, rgba(139, 26, 26, .9), rgba(204, 51, 51, .85)),
+    url('../images/33.jpg') center / cover no-repeat;
+}
+
+/* ── Print ── */
+@media print {
+  nav,
+  .cta-pulse,
+  .lightbox-backdrop,
+  iframe,
+  [x-cloak] {
+    display: none !important;
+  }
+
+  .hero-bg {
+    background: var(--c-primary) !important;
+  }
+
+  a[href]::after {
+    content: ' (' attr(href) ')';
+    font-size: .8em;
+    color: #666;
+  }
+}
